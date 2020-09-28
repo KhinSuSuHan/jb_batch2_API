@@ -134,4 +134,14 @@ class PostController extends Controller
         $post->delete();
         return new PostResource($post);
     }
+
+     public function filterByCategory($category_id)
+    {
+        $posts = Post::where('category_id',$category_id)->get();
+
+        return response()->json([
+            'status' => 'ok',
+            'totalResults' => count($posts),
+            'posts' => PostResource::collection($posts)
+        ]);
 }
